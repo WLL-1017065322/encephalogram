@@ -141,14 +141,100 @@
   - 读取键盘输入input()
 
 ### 文件系统
+- __file__是当前执行的文件
+- os.path.abspath(path)) 	返回绝对路径
+- os.path.realpath(path)	返回path的真实路径
+- os.path.split(path)	把路径分割成 dirname 和 basename，返回一个元组
+- os.path.dirname(__file__) 返回当前目录
+- os.path.join(docPath,i) 路径添加
 - open()打开一个文件，并返回文件对象,注意调用close()
 - file对象
   - file.close() 关闭文件
   - file.flush() 刷新文件内部缓冲，直接把内部缓冲区的数据立刻写入文件, 而不是被动的等待输出缓冲区写入
   - file.fileno() 返回一个整型的文件描述符
+  - file.isatty() 如果文件连接到一个终端设备返回 True，否则返回 False。
+  - file.next() 返回文件下一行。
+  - file.read([size]) 从文件读取指定的字节数，如果未给定或为负则读取所有
+  - file.readlines([sizeint]) 读取所有行并返回列表，若给定sizeint>0，则是设置一次读多少字节，这是为了减轻读取压力
+  - file.seek(offset[, whence]) 设置文件当前位置
+  - file.tell() 返回文件当前位置。
+  - file.truncate([size]) 截取文件，截取的字节通过size指定，默认为当前文件位置。
+  - file.write(str) 将字符串写入文件，返回的是写入的字符长度
+  - file.writelines(sequence) 向文件写入一个序列字符串列表，如果需要换行则要自己加入每行的换行符。
+  
 - OS文件/目录
+  - 常用
+    - os.mkdir(path[, mode]) 以数字mode的mode创建一个名为path的文件夹.默认的 mode 是 0777 (八进制)。
+    - os.listdir(path) 返回path指定的文件夹包含的文件或文件夹的名字的列表。
+    - os.open(file, flags[, mode]) 打开一个文件，并且设置需要的打开选项，mode参数是可选的
+    - os.remove(path) 删除路径为path的文件。如果path 是一个文件夹，将抛出OSError; 查看下面的rmdir()删除一个 directory。
+    - os.removedirs(path) 递归删除目录。
+    - os.rename(src, dst) 重命名文件或目录，从 src 到 dst
+
   - os.access() 检验权限模式
   - os.mkdir(path[, mode]) 以数字mode的mode创建一个名为path的文件夹.默认的 mode 是 0777 (八进制)。
+  - os.access(path, mode) 检验权限模式
+  - os.chdir(path) 改变当前工作目录
+  - os.chflags(path, flags) 设置路径的标记为数字标记。
+  - os.chmod(path, mode) 更改权限
+  - os.chown(path, uid, gid) 更改文件所有者
+  - os.chroot(path) 改变当前进程的根目录
+  - os.close(fd) 关闭文件描述符 fd
+  - os.closerange(fd_low, fd_high) 关闭所有文件描述符，从 fd_low (包含) 到 fd_high (不包含), 错误会忽略
+  - os.dup(fd) 复制文件描述符 fd
+  - os.dup2(fd, fd2) 将一个文件描述符 fd 复制到另一个 fd2
+  - os.fchdir(fd) 通过文件描述符改变当前工作目录
+  - os.fchmod(fd, mode) 改变一个文件的访问权限，该文件由参数fd指定，参数mode是Unix下的文件访问权限。
+  - os.fchown(fd, uid, gid) 修改一个文件的所有权，这个函数修改一个文件的用户ID和用户组ID，该文件由文件描述符fd指定。
+  - os.fdatasync(fd) 强制将文件写入磁盘，该文件由文件描述符fd指定，但是不强制更新文件的状态信息。
+  - os.fdopen(fd[, mode[, bufsize]]) 通过文件描述符 fd 创建一个文件对象，并返回这个文件对象
+  - os.fpathconf(fd, name) 返回一个打开的文件的系统配置信息。name为检索的系统配置的值，它也许是一个定义系统值的字符串，这些名字在很多标准中指定（POSIX.1, Unix 95, Unix 98, 和其它）。
+  - os.fstat(fd) 返回文件描述符fd的状态，像stat()。
+  - os.fstatvfs(fd) 返回包含文件描述符fd的文件的文件系统的信息，像 statvfs()os.fsync(fd) 强制将文件描述符为fd的文件写入硬盘。
+  - os.ftruncate(fd, length) 裁剪文件描述符fd对应的文件, 所以它最大不能超过文件大小。
+  - os.getcwd() 返回当前工作目录
+  - os.getcwdu() 返回一个当前工作目录的Unicode对象
+  - os.isatty(fd) 如果文件描述符fd是打开的，同时与tty(-like)设备相连，则返回true, 否则False。
+  - os.lchflags(path, flags) 设置路径的标记为数字标记，类似 chflags()，但是没有软链接
+  - os.lchmod(path, mode) 修改连接文件权限
+  - os.lchown(path, uid, gid) 更改文件所有者，类似 chown，但是不追踪链接。
+  - os.link(src, dst) 创建硬链接，名为参数 dst，指向参数 src
+  - os.listdir(path) 返回path指定的文件夹包含的文件或文件夹的名字的列表。
+  - os.lseek(fd, pos, how) 设置文件描述符 fd当前位置为pos, how方式修改: SEEK_SET 或者 0 设置从文件开始的计算的pos; SEEK_CUR或者 1 则从当前位置计算; os.SEEK_END或者2则从文件尾部开始. 在unix，Windows中有效
+  - os.lstat(path) 像stat(),但是没有软链接
+  - os.major(device) 从原始的设备号中提取设备major号码 (使用stat中的st_dev或者st_rdev field)。
+  - os.makedev(major, minor) 以major和minor设备号组成一个原始设备号
+  - os.makedirs(path[, mode]) 递归文件夹创建函数。像mkdir(), 但创建的所有intermediate-level文件夹需要包含子文件夹。
+  - os.minor(device) 从原始的设备号中提取设备minor号码 (使用stat中的st_dev或者st_rdev field )。
+  - os.mkdir(path[, mode]) 以数字mode的mode创建一个名为path的文件夹.默认的 mode 是 0777 (八进制)。
+  - os.mkfifo(path[, mode]) 创建命名管道，mode 为数字，默认为 0666 (八进制)os.mknod(filename[, mode=0600, device])创建一个名为filename文件系统节点（文件，设备特别文件或者命名pipe）。
+  - os.open(file, flags[, mode]) 打开一个文件，并且设置需要的打开选项，mode参数是可选的
+  - os.openpty() 打开一个新的伪终端对。返回 pty 和 tty的文件描述符。
+  - os.pathconf(path, name) 返回相关文件的系统配置信息。
+  - os.pipe() 创建一个管道. 返回一对文件描述符(r, w) 分别为读和写
+  - os.popen(command[, mode[, bufsize]]) 从一个 command 打开一个管道
+  - os.read(fd, n) 从文件描述符 fd 中读取最多 n 个字节，返回包含读取字节的字符串，文件描述符 fd对应文件已达到结尾, 返回一个空字符串。
+  - os.readlink(path) 返回软链接所指向的文件
+  - os.remove(path) 删除路径为path的文件。如果path 是一个文件夹，将抛出OSError; 查看下面的rmdir()删除一个 directory。
+  - os.removedirs(path) 递归删除目录。
+  - os.rename(src, dst) 重命名文件或目录，从 src 到 dst
+  - os.renames(old, new) 递归地对目录进行更名，也可以对文件进行更名。
+  - os.rmdir(path) 删除path指定的空目录，如果目录非空，则抛出一个OSError异常。
+  - os.stat(path) 获取path指定的路径的信息，功能等同于C API中的stat()系统调用。
+  - os.stat_float_times([newvalue])决定stat_result是否以float对象显示时间戳
+  - os.statvfs(path) 获取指定路径的文件系统统计信息
+  - os.symlink(src, dst) 创建一个软链接
+  - os.tcgetpgrp(fd) 返回与终端fd（一个由os.open()返回的打开的文件描述符）关联的进程组
+  - os.tcsetpgrp(fd, pg) 设置与终端fd（一个由os.open()返回的打开的文件描述符）关联的进程组为pg。
+  - os.tempnam([dir[, prefix]]) 返回唯一的路径名用于创建临时文件。
+  - os.tmpfile() 返回一个打开的模式为(w+b)的文件对象 .这文件对象没有文件夹入口，没有文件描述符，将会自动删除。
+  - os.tmpnam() 为创建一个临时文件返回一个唯一的路径
+  - os.ttyname(fd) 返回一个字符串，它表示与文件描述符fd 关联的终端设备。如果fd 没有与终端设备关联，则引发一个异常。
+  - os.unlink(path) 删除文件路径
+  - os.utime(path, times) 返回指定的path文件的访问和修改的时间。
+  - os.walk(top[, topdown=True[, onerror=None[, followlinks=False]]]) 输出在文件夹中的文件名通过在树中游走，向上或者向下。
+  - os.write(fd, str) 写入字符串到文件描述符 fd中. 返回实际写入的字符串长度
+  - os.path 模块 获取文件的属性信息。
 
 ### 错误和异常
 - 语法错误 解析错(语法分析器指出了出错的一行)
@@ -189,6 +275,17 @@ super(Child,c).myMethod() #用子类对象调用父类已被覆盖的方法
 
 ## 进阶知识
 ### 正则表达式
+- 模块:re
+- 方法
+  - re.match(pattern, string, flags=0)
+  - re.search(pattern, string, flags=0)
+  - re.match 只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回 None，而 re.search 匹配整个字符串，直到找到一个匹配。
+  - re.sub(pattern, repl, string, count=0, flags=0) 替换字符串中的匹配项
+  - re.compile(pattern[, flags])  用于编译正则表达式，生成一个正则表达式（ Pattern ）对象，供 match() 和 search() 这两个函数使用。
+  - re.findall(pattern, string, flags=0)
+  - re.finditer(pattern, string, flags=0)
+  - re.split(pattern, string[, maxsplit=0, flags=0]) 按照能够匹配的子串将字符串分割后返回列表
+  - 
 ### CGI编程
 ### MySQL
 ### 网络编程
