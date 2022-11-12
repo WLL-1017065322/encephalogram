@@ -292,7 +292,13 @@ super(Child,c).myMethod() #用子类对象调用父类已被覆盖的方法
 ### SMTP发送邮件
 ### 多线程
 ### XML解析
+
 ### JSON
+#### import json
+- json.dumps	将 Python 对象编码成 JSON 字符串
+- json.loads	将已编码的 JSON 字符串解码为 Python 对象
+#### 第三方库 Demjson
+
 ### 日期和时间
 ### 内置函数
 ### MongoDB
